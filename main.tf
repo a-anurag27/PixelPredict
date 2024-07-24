@@ -7,11 +7,11 @@ terraform {
       source  = "hashicorp/aws"
     }
   }
-  
+
   backend "s3" {
-    bucket         = "pixelpredict"
-    key            = "terraform/state/main.tfstate"
-    region         = "us-west-1"
+    bucket = "pixelpredict"
+    key    = "terraform/state/main.tfstate"
+    region = "us-west-1"
   }
 }
 
@@ -36,22 +36,23 @@ resource "aws_iam_role" "pixelpredict-stream-reader-role" {
       },
     ]
   })
-}
 
-tags = {
+
+  tags = {
     createdBy     = "terraform"
     createdFor    = "tf-migrate bug bash"
     terraformTime = "${timestamp()}"
     CanDelete     = "true"
   }
+}
 
 # Attach a policy to the IAM role
 resource "aws_iam_role_policy_attachment" "example_policy_attachment" {
-  role       = aws_iam_role.example_role.name
-  policy_arn  = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+  role       = aws_iam_role.pixelpredict-stream-reader-role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
 }
 
 # Output the role ARN
 output "role_arn" {
-  value = aws_iam_role.example_role.arn
+  value = aws_iam_role.pixelpredict-stream-reader-role.arn
 }

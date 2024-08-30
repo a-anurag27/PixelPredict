@@ -31,7 +31,7 @@ jobs:
 
       - name: Setup Docker Container
         run: |
-          docker build -t custom-alpine-terraform .
+          docker build -f ../../Dockerfile -t custom-alpine-terraform
 
       - name: Run Docker Container
         run: |

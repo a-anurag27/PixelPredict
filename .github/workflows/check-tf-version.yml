@@ -36,22 +36,23 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           build-args: TERRAFORM_VERSION=${{ env.TERRAFORM_VERSION }}
-          context: .
           file: Dockerfile
           tags: custom-alpine-terraform:latest
           push: false
 
-      - name: Check Availability of Docker Image
+      - name: List Docker Images
         run: |
           docker images
 
-      - name: Start Docker Container
+      - name: Inspect Built Docker Image
         run: |
-          docker run -d --name alpine_container custom-alpine-terraform:latest tail -f /dev/null
+          docker inspect custom-alpine-terraform:latest
 
-      - name: Check Running Docker Containers
+      - name: Output Image ID
         run: |
-          docker ps
+          IMAGE_ID=$(docker images -q custom-alpine-terraform:latest)
+          echo "Image ID: $IMAGE_ID"
+
       
       # - name: Check Terraform Version
       #   run: |

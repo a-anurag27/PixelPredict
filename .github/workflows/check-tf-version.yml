@@ -3,7 +3,7 @@ name: check-tf-version
 on:
   workflow_dispatch:
     inputs:
-      TF_VER:
+      TERRAFORM_VERSION:
         description: 'Terraform version to use'
         required: false
         default: ''
@@ -13,22 +13,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set TF_VER environment variable
+      - name: Set TERRAFORM_VERSION environment variable
         id: set-tf-ver
         run: |
-          if [ -z "${{ github.event.inputs.TF_VER }}" ]; then
-            echo "TF_VER not supplied. Fetching the latest version..."
+          if [ -z "${{ github.event.inputs.TERRAFORM_VERSION }}" ]; then
+            echo "TERRAFORM_VERSION not supplied. Fetching the latest version..."
             # Fetch the latest Terraform version from the HashiCorp API
-            TF_VER=$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r .current_version)
+            TERRAFORM_VERSION=$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r .current_version)
           else
-            TF_VER="${{ github.event.inputs.TF_VER }}"
+            TERRAFORM_VERSION="${{ github.event.inputs.TERRAFORM_VERSION }}"
           fi
-          echo "TF_VER=${TF_VER}" >> $GITHUB_ENV
+          echo "TERRAFORM_VERSION=${TERRAFORM_VERSION}" >> $GITHUB_ENV
 
-      - name: Print TF_VER
+      - name: Print TERRAFORM_VERSION
         run: |
-          echo "TF_VER is set to $TF_VER"
+          echo "TERRAFORM_VERSION is set to $TERRAFORM_VERSION"
 
-      - name: Run Terraform Setup
+      - name: Setup Docker Container
         run: |
-          echo "Setting up Terraform version $TF_VER..."
+          docker build -t custom-alpine-terraform .
+
+      - name: Run Docker Container
+        run: |
+          docker compose up -d
+      
+      - name: Check Terraform Version
+        run: |
+          docker exec alpine_container terraform --version

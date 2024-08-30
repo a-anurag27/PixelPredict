@@ -1,0 +1,6 @@
+
+services:
+  alpine:
+    image: custom-alpine-terraform
+    container_name: alpine_container
+    command: ["tail", "-f", "/dev/null"]

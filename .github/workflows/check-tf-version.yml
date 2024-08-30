@@ -35,9 +35,9 @@ jobs:
       - name: Build Docker Container Image
         uses: docker/build-push-action@v6
         with:
-          context: .
           build-args: TERRAFORM_VERSION=${{ env.TERRAFORM_VERSION }}
-          file: ../../Dockerfile
+          context: .
+          file: ./Dockerfile
           tags: custom-alpine-terraform:latest
           push: false
 

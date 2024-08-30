@@ -39,19 +39,25 @@ jobs:
           file: Dockerfile
           tags: custom-alpine-terraform:latest
           push: false
+          outputs: type=docker, dest=/tmp/custom-alpine-terraform.tar
 
-      - name: List Docker Images
+      - name: Load image
         run: |
-          docker images
+          docker load --input /tmp/custom-alpine-terraform.tar
+          docker image ls -a 
 
-      - name: Inspect Built Docker Image
-        run: |
-          docker inspect custom-alpine-terraform:latest
+      # - name: List Docker Images
+      #   run: |
+      #     docker images
 
-      - name: Output Image ID
-        run: |
-          IMAGE_ID=$(docker images -q custom-alpine-terraform:latest)
-          echo "Image ID: $IMAGE_ID"
+      # - name: Inspect Built Docker Image
+      #   run: |
+      #     docker inspect custom-alpine-terraform:latest
+
+      # - name: Output Image ID
+      #   run: |
+      #     IMAGE_ID=$(docker images -q custom-alpine-terraform:latest)
+      #     echo "Image ID: $IMAGE_ID"
 
       
       # - name: Check Terraform Version

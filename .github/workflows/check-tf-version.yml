@@ -50,14 +50,14 @@ jobs:
       #   run: |
       #     docker images
 
-      # - name: Inspect Built Docker Image
-      #   run: |
-      #     docker inspect custom-alpine-terraform:latest
+      - name: Inspect Built Docker Image
+        run: |
+          docker inspect custom-alpine-terraform:latest
 
-      # - name: Output Image ID
-      #   run: |
-      #     IMAGE_ID=$(docker images -q custom-alpine-terraform:latest)
-      #     echo "Image ID: $IMAGE_ID"
+      - name: Output Image ID
+        run: |
+          IMAGE_ID=$(docker images -q custom-alpine-terraform:latest)
+          echo "Image ID: $IMAGE_ID"
 
       
       # - name: Check Terraform Version

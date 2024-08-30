@@ -41,20 +41,16 @@ jobs:
           push: false
           outputs: type=docker, dest=/tmp/custom-alpine-terraform.tar
 
-      - name: Load image
+      - name: List Docker Images
         run: |
           docker load --input /tmp/custom-alpine-terraform.tar
-          docker image ls -a 
-
-      # - name: List Docker Images
-      #   run: |
-      #     docker images
+          docker image ls -a | grep custom-alpine-terraform
 
       - name: Inspect Built Docker Image
         run: |
           docker inspect custom-alpine-terraform:latest
 
-      - name: Output Image ID
+      - name: Set Docker Image ID
         run: |
           IMAGE_ID=$(docker images -q custom-alpine-terraform:latest)
           echo "Image ID: $IMAGE_ID"
@@ -66,7 +62,10 @@ jobs:
         env:
           IMAGE_ID: ${{ env.IMAGE_ID }}
 
+      - name: List Running Docker Containers
+        run: |
+          docker ps -a | grep terraform_alpine_container
       
-      # - name: Check Terraform Version
-      #   run: |
-      #     docker exec alpine_container terraform --version
+      - name: Check Conatiner Terraform Version
+        run: |
+          docker exec alpine_container terraform --version

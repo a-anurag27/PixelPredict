@@ -40,9 +40,17 @@ jobs:
           tags: custom-alpine-terraform:latest
           push: false
 
-      - name: Run Docker Container
+      - name: Check Availability of Docker Image
         run: |
-          docker compose up -d
+          docker images
+
+      - name: Start Docker Container
+        run: |
+          docker run -d --name alpine_container custom-alpine-terraform:latest tail -f /dev/null
+
+      - name: Check Running Docker Containers
+        run: |
+          docker ps
       
       # - name: Check Terraform Version
       #   run: |

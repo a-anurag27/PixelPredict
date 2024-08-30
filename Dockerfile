@@ -4,7 +4,10 @@ FROM alpine:latest
 RUN apk add --no-cache wget unzip
 
 # Set environment variable for Terraform version
-ARG TERRAFORM_VERSION
+ARG TERRAFORM_VERSION=1.0.0
+
+# Run Terraform version
+RUN echo ${TERRAFORM_VERSION}
 
 # Download Terraform
 RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip

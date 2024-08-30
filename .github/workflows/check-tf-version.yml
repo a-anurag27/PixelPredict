@@ -58,6 +58,13 @@ jobs:
         run: |
           IMAGE_ID=$(docker images -q custom-alpine-terraform:latest)
           echo "Image ID: $IMAGE_ID"
+          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
+
+      - name: Run Docker Image
+        run: |
+          docker run --name terraform_alpine_container -d $IMAGE_ID tail -f /dev/null
+        env:
+          IMAGE_ID: ${{ env.IMAGE_ID }}
 
       
       # - name: Check Terraform Version

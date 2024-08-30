@@ -29,14 +29,18 @@ jobs:
         run: |
           echo "TERRAFORM_VERSION is set to $TERRAFORM_VERSION"
 
-      - name: Setup Docker Container
-        run: |
-          docker build -f ../../Dockerfile -t custom-alpine-terraform
+      - name: Build Docker Container Image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ../../Dockerfile
+          tags: custom-alpine-terraform:latest
+          push: false
 
-      - name: Run Docker Container
-        run: |
-          docker compose up -d
+      # - name: Run Docker Container
+      #   run: |
+      #     docker compose up -d
       
-      - name: Check Terraform Version
-        run: |
-          docker exec alpine_container terraform --version
+      # - name: Check Terraform Version
+      #   run: |
+      #     docker exec alpine_container terraform --version

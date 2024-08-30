@@ -40,9 +40,9 @@ jobs:
           tags: custom-alpine-terraform:latest
           push: false
 
-      # - name: Run Docker Container
-      #   run: |
-      #     docker compose up -d
+      - name: Run Docker Container
+        run: |
+          docker compose up -d
       
       # - name: Check Terraform Version
       #   run: |

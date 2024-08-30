@@ -1,6 +1,6 @@
 
 services:
   alpine:
-    image: custom-alpine-terraform
+    image: custom-alpine-terraform:latest
     container_name: alpine_container
     command: ["tail", "-f", "/dev/null"]

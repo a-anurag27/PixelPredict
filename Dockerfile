@@ -7,7 +7,7 @@ RUN apk add --no-cache wget unzip
 ARG TERRAFORM_VERSION=1.0.0
 
 # Run Terraform version
-RUN echo ${TERRAFORM_VERSION}
+RUN echo TERRAFORM_VERSION=${TERRAFORM_VERSION}
 
 # Download Terraform
 RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip

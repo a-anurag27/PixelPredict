@@ -64,8 +64,18 @@ jobs:
 
       - name: List Running Docker Containers
         run: |
-          docker ps -a | grep terraform_alpine_container
-      
-      - name: Check Conatiner Terraform Version
+            docker ps -a | grep terraform_alpine_container
+  
+      - name: Check Container Status via Docker API
         run: |
-          docker exec alpine_container terraform --version
+            CONTAINER_ID=$(docker ps -aqf "name=terraform_alpine_container")
+            STATUS=$(curl --unix-socket /var/run/docker.sock http://localhost/containers/$CONTAINER_ID/json | jq -r '.State.Status')
+            echo "Container Status: $STATUS"
+            if [ "$STATUS" != "running" ]; then
+              echo "Container is not running"
+              exit 1
+            fi
+  
+      - name: Check Container Terraform Version
+        run: |
+            docker exec terraform_alpine_container terraform --version

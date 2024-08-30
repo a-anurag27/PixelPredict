@@ -79,7 +79,7 @@ jobs:
       - name: Validate Terraform Version
         run: |
           EXPECTED_VERSION=${{ env.TERRAFORM_VERSION }}
-          CONTAINER_VERSION=$(docker exec terraform_alpine_container terraform --version | awk '{print $2}')
+          CONTAINER_VERSION=$(docker exec terraform_alpine_container terraform --version | awk '{print $2}' | sed 's/^v//')
           echo "Expected Terraform Version: $EXPECTED_VERSION"
           echo "Container Terraform Version: $CONTAINER_VERSION"
           if [ "$CONTAINER_VERSION" != "$EXPECTED_VERSION" ]; then

@@ -28,7 +28,7 @@ RUN terraform --version
 COPY tf-migrate /usr/local/bin/
 
 # Make tf-migrate binary executable
-RUN chomd +x /usr/local/bin/tf-migrate
+RUN chmod +x /usr/local/bin/tf-migrate
 
 # Verify installation
 RUN tf-migrate --version

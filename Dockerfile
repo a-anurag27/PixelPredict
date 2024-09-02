@@ -22,7 +22,7 @@ RUN mv terraform /usr/local/bin/
 RUN rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 # Copy HCP Terraform Migrator
-RUN mv tf-migrate /usr/local/bin/
+COPY tf-migrate /usr/local/bin/tf-migrate
 
 # Verify installation
 RUN terraform --version

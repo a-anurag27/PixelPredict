@@ -16,6 +16,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check Files
+        run: |
+          ls -la
+
       - name: Set TERRAFORM_VERSION environment variable
         id: set-tf-ver
         run: |

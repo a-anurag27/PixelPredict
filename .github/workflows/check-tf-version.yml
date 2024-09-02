@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set TERRAFORM_VERSION environment variable
         id: set-tf-ver
         run: |
@@ -88,3 +91,11 @@ jobs:
           fi
         env:
           TERRAFORM_VERSION: ${{ env.TERRAFORM_VERSION }}
+
+      - name: Run Terraform Commands
+        run: |
+          docker exec terraform_alpine_container terraform --version
+
+      - name: Run HCP Terraform Migrator Commands
+        run: |
+          docker exec terraform_alpine_container tf-migrate --version

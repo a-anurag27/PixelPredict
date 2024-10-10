@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "pixelpredict"
+    bucket = "pixelpredictfork"
     key    = "terraform/state/main.tfstate"
     region = "us-west-1"
   }

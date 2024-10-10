@@ -8,10 +8,13 @@ terraform {
     }
   }
 
-  backend "s3" {
-    bucket = "pixelpredictfork"
-    key    = "terraform/state/main.tfstate"
-    region = "us-west-1"
+  cloud {
+    organization = "AnuragInit"
+    hostname     = "app.terraform.io"
+    workspaces {
+      project = "pixel_predict"
+      name    = "pixel_predict_default"
+    }
   }
 }
 

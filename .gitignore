@@ -39,4 +39,4 @@ terraform.rc
 _hcp-migrate-configs/
 _hcp-migrate-configs-*/
 !_hcp-migrate-configs*/terraform.tfstate*
-.terraform.lock.*
+# .terraform.lock.*
